@@ -18,7 +18,7 @@ var base10_to_base2 = function(nombre) {
     return result;
 };
 
-var number = function(n) {
+var string_to_number = function(n) {
     var code = n.charCodeAt(0);
     if ("0".charCodeAt(0) <= code && code <= "9".charCodeAt(0)) {
         return code - "0".charCodeAt(0);
@@ -33,7 +33,7 @@ var base16_to_base10 = function(nombre) {
     var idx;
     var result = 0;
     for(idx = 0; idx < nombre.length; idx++) {
-        result += number(nombre[idx]) * Math.pow(16, nombre.length - 1 - idx);
+        result += string_to_number(nombre[idx]) * Math.pow(16, nombre.length - 1 - idx);
     }
 
     return result;
@@ -57,25 +57,25 @@ var base10_to_base16 = function(nombre) {
     return result;
 };
 
-// var from_base10 = function(number, base) {
-//     var result = "";
-//     do {
-//         result = number_to_string(number % 16) + result;
-//         number = Math.floor(number / 16);
-//     } while(number >= 1);
+var from_base10 = function(number, base) {
+    var result = "";
+    do {
+        result = number_to_string(number % base) + result;
+        number = Math.floor(number / base);
+    } while(number >= 1);
     
-//     return result;
-// };
+    return result;
+};
 
-// var to_base10 = function(number, base) {
-//     var idx;
-//     var result = 0;
-//     for(idx = 0; idx < number.length; idx++) {
-//         result += number(number[idx]) * Math.pow(16, number.length - 1 - idx);
-//     }
+var to_base10 = function(number, base) {
+    var idx;
+    var result = 0;
+    for(idx = 0; idx < number.length; idx++) {
+        result += string_to_number(number[idx]) * Math.pow(base, number.length - 1 - idx);
+    }
 
-//     return result;
-// };
+    return result;
+};
 
 console.log(base2_to_base10("0"));            // 0
 console.log(base2_to_base10("1000"));         // 8
@@ -103,13 +103,24 @@ console.log(base10_to_base16(23));   // "17"
 console.log(base10_to_base16(52));   // "34"
 console.log(base10_to_base16(1000)); // "3E8"
 
-// console.log(from_base10(0, 16));    // "0"
-// console.log(from_base10(1, 16));    // "1"
-// console.log(from_base10(10, 16));   // "A"
-// console.log(from_base10(23, 16));   // "17"
-// console.log(from_base10(52, 16));   // "34"
-// console.log(from_base10(1000, 16)); // "3E8"
-// console.log(from_base10(1000, 8));  // "1750"
-// console.log(from_base10(1000, 2));  // "1111101000"
-// console.log(from_base10(1000, 3));  // ""
-// console.log(from_base10(1000, 10)); // "1000"
+console.log(from_base10(0, 16));    // "0"
+console.log(from_base10(1, 16));    // "1"
+console.log(from_base10(10, 16));   // "A"
+console.log(from_base10(23, 16));   // "17"
+console.log(from_base10(52, 16));   // "34"
+console.log(from_base10(1000, 16)); // "3E8"
+console.log(from_base10(1000, 8));  // "1750"
+console.log(from_base10(1000, 2));  // "1111101000"
+console.log(from_base10(1000, 3));  // ""
+console.log(from_base10(1000, 10)); // "1000"
+
+console.log(to_base10("0", 16));         // 0
+console.log(to_base10("1", 16));         // 1
+console.log(to_base10("A", 16));         // 10
+console.log(to_base10("17", 16));        // 23
+console.log(to_base10("34", 16));        // 52
+console.log(to_base10("3E8", 16));       // 1000
+console.log(to_base10("1750", 8));       // 1000
+console.log(to_base10("1111101000", 2)); // 1000
+console.log(to_base10("1101001", 3));    // 1000
+console.log(to_base10("1000", 10));      // 1000

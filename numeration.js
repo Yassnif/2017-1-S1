@@ -19,22 +19,14 @@ var base10_to_base2 = function(nombre) {
 };
 
 var number = function(n) {
-    if (n === "0") return 0;
-    if (n === "1") return 1;
-    if (n === "2") return 2;
-    if (n === "3") return 3;
-    if (n === "4") return 4;
-    if (n === "5") return 5;
-    if (n === "6") return 6;
-    if (n === "7") return 7;
-    if (n === "8") return 8;
-    if (n === "9") return 9;
-    if (n === "a" || n === "A") return 10;
-    if (n === "b" || n === "B") return 11;
-    if (n === "c" || n === "C") return 12;
-    if (n === "d" || n === "D") return 13;
-    if (n === "e" || n === "E") return 14;
-    if (n === "f" || n === "F") return 15;
+    var code = n.charCodeAt(0);
+    if ("0".charCodeAt(0) <= code && code <= "9".charCodeAt(0)) {
+        return code - "0".charCodeAt(0);
+    } else if ("a".charCodeAt(0) <= code && code <= "z".charCodeAt(0)) {
+        return code - ("a".charCodeAt(0) - 10);
+    } else if ("A".charCodeAt(0) <= code && code <= "Z".charCodeAt(0)) {
+        return code - ("A".charCodeAt(0) - 10);
+    }
 };
 
 var base16_to_base10 = function(nombre) {
@@ -68,3 +60,4 @@ console.log(base16_to_base10("0"));   // 0
 console.log(base16_to_base10("3"));   // 3
 console.log(base16_to_base10("A1"));  // 161
 console.log(base16_to_base10("100")); // 256
+console.log(base16_to_base10("abc")); // 2748

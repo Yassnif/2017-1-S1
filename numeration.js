@@ -133,6 +133,17 @@ var abs = function(number) {
     }
 };
 
+var prepend = function(str, char, length) {
+    var idx;
+    var toAdd = length - str.length;
+
+    for(idx = 0; idx < toAdd; idx++) {
+        str = char + str;
+    }
+
+    return str;
+};
+
 var signed_base10_to_base2 = function(number, digits) {
     var idx;
     var complement = "";
@@ -141,6 +152,7 @@ var signed_base10_to_base2 = function(number, digits) {
     if(number < 0) {
         number = abs(number);
         number = base10_to_base2(number);
+        number = prepend(number, "0", digits - 1);
 
         for(idx = 0; idx < number.length; idx++) {
             if(number[idx] === "0") {
@@ -154,18 +166,12 @@ var signed_base10_to_base2 = function(number, digits) {
         complement = complement + 1;
         complement = base10_to_base2(complement);
 
-        length = complement.length;
-        for(idx = 0; idx < digits - length - 1; idx++) {
-            complement = "0" + complement;
-        }
+        complement = prepend(complement, "0", digits - 1);
 
         return "1" + complement;
     } else {
         number = base10_to_base2(number);
-        length = number.length;
-        for(idx = 0; idx < digits - length; idx++) {
-            number = "0" + number;
-        }
+        number = prepend(number, "0", digits);
 
         return number;
     }
@@ -175,3 +181,4 @@ console.log(signed_base10_to_base2(0, 3));   // 000
 console.log(signed_base10_to_base2(1, 3));   // 001
 console.log(signed_base10_to_base2(-1, 5));  // 11111
 console.log(signed_base10_to_base2(-18, 6)); // 101110
+console.log(signed_base10_to_base2(-2, 8));  // 11111110

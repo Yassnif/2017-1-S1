@@ -124,3 +124,54 @@ console.log(to_base10("1750", 8));       // 1000
 console.log(to_base10("1111101000", 2)); // 1000
 console.log(to_base10("1101001", 3));    // 1000
 console.log(to_base10("1000", 10));      // 1000
+
+var abs = function(number) {
+    if (number >= 0) {
+        return number;
+    } else {
+        return -number;
+    }
+};
+
+var signed_base10_to_base2 = function(number, digits) {
+    var idx;
+    var complement = "";
+    var length;
+
+    if(number < 0) {
+        number = abs(number);
+        number = base10_to_base2(number);
+
+        for(idx = 0; idx < number.length; idx++) {
+            if(number[idx] === "0") {
+                complement = complement + "1";
+            } else {
+                complement = complement + "0";
+            }
+        }
+
+        complement = base2_to_base10(complement);
+        complement = complement + 1;
+        complement = base10_to_base2(complement);
+
+        length = complement.length;
+        for(idx = 0; idx < digits - length - 1; idx++) {
+            complement = "0" + complement;
+        }
+
+        return "1" + complement;
+    } else {
+        number = base10_to_base2(number);
+        length = number.length;
+        for(idx = 0; idx < digits - length; idx++) {
+            number = "0" + number;
+        }
+
+        return number;
+    }
+};
+
+console.log(signed_base10_to_base2(0, 3));   // 000
+console.log(signed_base10_to_base2(1, 3));   // 001
+console.log(signed_base10_to_base2(-1, 5));  // 11111
+console.log(signed_base10_to_base2(-18, 6)); // 101110

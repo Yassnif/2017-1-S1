@@ -1,18 +1,18 @@
-var plantes = [];
+var plants = [];
 var herbivores = [];
 var carnivores = [];
-var tours = 1000;
-var nbTours;
+var turns = 1000;
+var turnsCount;
 var c1;
 var c2;
 var drawing;
 
-var spawnPlante = function(c1, c2) {
+var spawnPlant = function(c1, c2) {
     var c = {};
     c.x = Math.random() * (c2.x - c1.x) + c1.x;
     c.y = Math.random() * (c2.y - c1.y) + c1.y;
 
-    plantes.push(c);
+    plants.push(c);
 };
 
 var containsPlant = function(plants, line, col) {
@@ -56,8 +56,8 @@ var drawGrid = function() {
     var idx;
     var gridPlants = [];
     
-    for (idx = 0; idx < plantes.length; idx++) {
-        gridPlants[idx] = zooToGrid(plantes[idx]);
+    for (idx = 0; idx < plants.length; idx++) {
+        gridPlants[idx] = zooToGrid(plants[idx]);
     }
 
     for (idx = 0; idx < 10; idx++) {
@@ -68,14 +68,14 @@ var drawGrid = function() {
     drawLine("+", "-", [], 0);
 }
 
-for (nbTours = 0; nbTours < tours; nbTours++) {
+for (turnsCount = 0; turnsCount < turns; turnsCount++) {
     c1 = {};
     c1.x = -1;
     c1.y = -1;
     c2 = {};
     c2.x = 1;
     c2.y = 1;
-    spawnPlante(c1, c2);
+    spawnPlant(c1, c2);
 
     c1 = {};
     c1.x = -0.5;
@@ -83,7 +83,7 @@ for (nbTours = 0; nbTours < tours; nbTours++) {
     c2 = {};
     c2.x = 0.5;
     c2.y = 0.5;
-    spawnPlante(c1, c2);
+    spawnPlant(c1, c2);
 
     drawGrid();
 }

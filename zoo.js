@@ -33,13 +33,18 @@ for (nbTours = 0; nbTours < tours; nbTours++) {
     spawnPlante(c1, c2);
 }
 
-drawing = "";
-for (idx = 0; idx < 10; idx++) {
-    drawing = drawing + "+-";
-}
-drawing = drawing + "+";
+var drawnLine = function(delimiter, interval) {
+    drawing = "";
+    for (idx = 0; idx < 10; idx++) {
+        drawing = drawing + delimiter + interval;
+    }
+    drawing = drawing + delimiter;
 
-console.log(drawing);
+    console.log(drawing);
+}
+
+drawnLine("+", "-");
+drawnLine("|", " ");
 
 // +-+-+-+-+-+-+-+-+-+-+
 // | | | | | | |P| | | |

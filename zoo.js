@@ -34,7 +34,8 @@ for (nbTours = 0; nbTours < tours; nbTours++) {
 }
 
 var drawnLine = function(delimiter, interval) {
-    drawing = "";
+    var idx;
+    var drawing = "";
     for (idx = 0; idx < 10; idx++) {
         drawing = drawing + delimiter + interval;
     }
@@ -43,8 +44,17 @@ var drawnLine = function(delimiter, interval) {
     console.log(drawing);
 }
 
-drawnLine("+", "-");
-drawnLine("|", " ");
+var drawGrid = function() {
+    var idx;
+    for (idx = 0; idx < 10; idx++) {
+        drawnLine("+", "-");
+        drawnLine("|", " ");
+    }
+
+    drawnLine("+", "-");
+}
+
+drawGrid();
 
 // +-+-+-+-+-+-+-+-+-+-+
 // | | | | | | |P| | | |

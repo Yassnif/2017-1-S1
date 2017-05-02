@@ -54,7 +54,18 @@ var drawGrid = function() {
     drawLine("+", "-");
 }
 
-drawGrid();
+// [-1.0; 1.0] -> [0; 9]
+var zooToGrid = function(c) {
+    var result = {};
+    result.x = Math.floor((c.x + 1) * 9 / 2);
+    result.y = Math.floor((c.y + 1) * -9 / 2 + 9);
+
+    return result;
+};
+
+console.log(zooToGrid({ x: -1, y: 1 }));
+
+// drawGrid();
 
 // +-+-+-+-+-+-+-+-+-+-+
 // | | | | | | |P| | | |

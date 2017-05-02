@@ -33,7 +33,7 @@ for (nbTours = 0; nbTours < tours; nbTours++) {
     spawnPlante(c1, c2);
 }
 
-var drawnLine = function(delimiter, interval) {
+var drawLine = function(delimiter, interval) {
     var idx;
     var drawing = "";
     for (idx = 0; idx < 10; idx++) {
@@ -47,11 +47,11 @@ var drawnLine = function(delimiter, interval) {
 var drawGrid = function() {
     var idx;
     for (idx = 0; idx < 10; idx++) {
-        drawnLine("+", "-");
-        drawnLine("|", " ");
+        drawLine("+", "-");
+        drawLine("|", " ");
     }
 
-    drawnLine("+", "-");
+    drawLine("+", "-");
 }
 
 drawGrid();

@@ -7,6 +7,8 @@ var turnsCount;
 var zooBound1;
 var zooBound2;
 var drawing;
+var meterSize = 1 / 250;
+var herbivoreSpeed = 5 * meterSize;
 
 zooBound1 = {};
 zooBound1.x = -1.0;
@@ -31,10 +33,10 @@ var spawn = function(c1, c2, array) {
     array.push(c);
 };
 
-var containsPlant = function(plants, line, col) {
+var containsZooObject = function(zooObjects, line, col) {
     var idx;
-    for (idx = 0; idx < plants.length; idx++) {
-        if (plants[idx].x === col && plants[idx].y === line) {
+    for (idx = 0; idx < zooObjects.length; idx++) {
+        if (zooObjects[idx].x === col && zooObjects[idx].y === line) {
             return true;
         }
     }
@@ -42,12 +44,14 @@ var containsPlant = function(plants, line, col) {
     return false;
 };
 
-var drawLine = function(delimiter, interval, plants, line) {
+var drawLine = function(delimiter, interval, herbivores, plants, line) {
     var col;
     var drawing = "";
     var c;
     for (col = 0; col < 10; col++) {
-        if (containsPlant(plants, line, col)) {
+        if (containsZooObject(herbivores, line, col)) {
+            c = "H";
+        } else if (containsZooObject(plants, line, col)) {
             c = "P";
         } else {
             c = interval;
@@ -71,17 +75,22 @@ var zooToGrid = function(c) {
 var drawGrid = function() {
     var idx;
     var gridPlants = [];
+    var gridHerbivores = [];
     
     for (idx = 0; idx < plants.length; idx++) {
         gridPlants[idx] = zooToGrid(plants[idx]);
     }
 
-    for (idx = 0; idx < 10; idx++) {
-        drawLine("+", "-", [], 0);
-        drawLine("|", " ", gridPlants, idx);
+    for (idx = 0; idx < herbivores.length; idx++) {
+        gridHerbivores[idx] = zooToGrid(herbivores[idx]);
     }
 
-    drawLine("+", "-", [], 0);
+    for (idx = 0; idx < 10; idx++) {
+        drawLine("+", "-", [], [], 0);
+        drawLine("|", " ", gridHerbivores, gridPlants, idx);
+    }
+
+    drawLine("+", "-", [], [], 0);
 };
 
 var spawnInitialHerbivores = function() {
@@ -93,6 +102,26 @@ var spawnInitialHerbivores = function() {
     }
 };
 
+var sqrt = function(n) {
+
+};
+
+var randomDirection = function() {
+    var x = Math.random() * 2 - 1;
+    var y = sqrt(1 - x * x);
+};
+
+var moveHerbivore = function(herbivore) {
+
+};
+
+var moveHerbivores = function() {
+    var idx;
+    for (idx = 0; idx < herbivores.length; idx++) {
+        moveHerbivore(herbivores[idx]);
+    }
+};
+
 spawnInitialHerbivores();
 for (turnsCount = 0; turnsCount < turns; turnsCount++) {
     spawnPlant(zooBound1, zooBound2);
@@ -101,9 +130,11 @@ for (turnsCount = 0; turnsCount < turns; turnsCount++) {
     c1.x = zooBound1.x / 2;
     c1.y = zooBound1.y / 2;
     var c2 = {};
-    c1.x = zooBound2.x / 2;
-    c1.y = zooBound2.y / 2;
+    c2.x = zooBound2.x / 2;
+    c2.y = zooBound2.y / 2;
     spawnPlant(c1, c2);
+
+    moveHerbivores();
 
     drawGrid();
 }

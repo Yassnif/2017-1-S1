@@ -135,8 +135,23 @@ var multiply = function(v, n) {
     return result;
 };
 
+var closestPlant = function(herbivore) {
+
+};
+
+var directionTo = function(from, to) {
+
+};
+
+var dirToClosestPlant = function(herbivore) {
+    var plant = closestPlant(herbivore);
+    var direction = directionTo(herbivore, plant);
+
+    return direction;
+};
+
 var moveHerbivore = function(herbivore) {
-    var direction = randomDirection();
+    var direction = dirToClosestPlant(herbivore);
     var move = multiply(direction, meterSize);
     herbivore.x = herbivore.x + move.x;
     herbivore.y = herbivore.y + move.y;
@@ -165,5 +180,3 @@ for (turnsCount = 0; turnsCount < turns; turnsCount++) {
 
     drawGrid();
 }
-
-console.log(sqrt(0.2));

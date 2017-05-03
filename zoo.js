@@ -135,8 +135,32 @@ var multiply = function(v, n) {
     return result;
 };
 
-var closestPlant = function(herbivore) {
+var distance = function(p1, p2) {
+    var x = p2.x - p1.x;
+    var y = p2.y - p1.y;
 
+    return sqrt(x * x + y * y);
+};
+
+var closestPlant = function(herbivore) {
+    var idx;
+    var plant;
+    var d;
+    var minDistance = Number.MAX_VALUE;
+
+    if (plants.length === 0) {
+        return null;
+    }
+
+    for (idx = 0; idx < plants.length; idx++) {
+        d = distance(herbivore, plants[idx]);
+        if (d < minDistance) {
+            minDistance = d;
+            plant = plants[idx];
+        }
+    }
+
+    return plant;
 };
 
 var directionTo = function(from, to) {
@@ -145,7 +169,13 @@ var directionTo = function(from, to) {
 
 var dirToClosestPlant = function(herbivore) {
     var plant = closestPlant(herbivore);
-    var direction = directionTo(herbivore, plant);
+    var direction;
+
+    if (plant === null) {
+        direction = randomDirection();
+    } else {
+        direction = directionTo(herbivore, plant);
+    }
 
     return direction;
 };

@@ -1,18 +1,34 @@
 var plants = [];
 var herbivores = [];
+var initialHerbivoresCount = 10;
 var carnivores = [];
 var turns = 1000;
 var turnsCount;
-var c1;
-var c2;
+var zooBound1;
+var zooBound2;
 var drawing;
 
+zooBound1 = {};
+zooBound1.x = -1.0;
+zooBound1.y = -1.0;
+zooBound2 = {};
+zooBound2.x = 1.0;
+zooBound2.y = 1.0;
+
 var spawnPlant = function(c1, c2) {
+    spawn(c1, c2, plants);
+};
+
+var spawnHerbivore = function(c1, c2) {
+    spawn(c1, c2, herbivores);
+};
+
+var spawn = function(c1, c2, array) {
     var c = {};
     c.x = Math.random() * (c2.x - c1.x) + c1.x;
     c.y = Math.random() * (c2.y - c1.y) + c1.y;
 
-    plants.push(c);
+    array.push(c);
 };
 
 var containsPlant = function(plants, line, col) {
@@ -66,47 +82,28 @@ var drawGrid = function() {
     }
 
     drawLine("+", "-", [], 0);
-}
+};
 
+var spawnInitialHerbivores = function() {
+    var idx;
+    var c1;
+    var c2;
+    for (idx = 0; idx < initialHerbivoresCount; idx++) {
+        spawnHerbivore(zooBound1, zooBound2);
+    }
+};
+
+spawnInitialHerbivores();
 for (turnsCount = 0; turnsCount < turns; turnsCount++) {
-    c1 = {};
-    c1.x = -1;
-    c1.y = -1;
-    c2 = {};
-    c2.x = 1;
-    c2.y = 1;
-    spawnPlant(c1, c2);
+    spawnPlant(zooBound1, zooBound2);
 
-    c1 = {};
-    c1.x = -0.5;
-    c1.y = -0.5;
-    c2 = {};
-    c2.x = 0.5;
-    c2.y = 0.5;
+    var c1 = {};
+    c1.x = zooBound1.x / 2;
+    c1.y = zooBound1.y / 2;
+    var c2 = {};
+    c1.x = zooBound2.x / 2;
+    c1.y = zooBound2.y / 2;
     spawnPlant(c1, c2);
 
     drawGrid();
 }
-
-
-// +-+-+-+-+-+-+-+-+-+-+
-// | | | | | | |P| | | |
-// +-+-+-+-+-+-+-+-+-+-+
-// | | | | | | | | | | |
-// +-+-+-+-+-+-+-+-+-+-+
-// | | | | | | | | | | |
-// +-+-+-+-+-+-+-+-+-+-+
-// | | | | | | | | | | |
-// +-+-+-+-+-+-+-+-+-+-+
-// | | | | | | | | | | |
-// +-+-+-+-+-+-+-+-+-+-+
-// | | |P| | | | | | | |
-// +-+-+-+-+-+-+-+-+-+-+
-// | | | | | | | | | | |
-// +-+-+-+-+-+-+-+-+-+-+
-// | | | | | | | | | | |
-// +-+-+-+-+-+-+-+-+-+-+
-// | | | | | | | | | | |
-// +-+-+-+-+-+-+-+-+-+-+
-// | | | | | | | | | | |
-// +-+-+-+-+-+-+-+-+-+-+

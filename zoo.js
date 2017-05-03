@@ -103,16 +103,43 @@ var spawnInitialHerbivores = function() {
 };
 
 var sqrt = function(n) {
+    var idx;
+    var x = n;
 
+    for (idx = 0; idx < 10; idx++) {
+        x = (x + n / x) / 2;
+    }
+
+    return x;
 };
 
 var randomDirection = function() {
     var x = Math.random() * 2 - 1;
     var y = sqrt(1 - x * x);
+    if (Math.random() < 0.5) {
+        y = -y;
+    }
+
+    var direction = {};
+    direction.x = x;
+    direction.y = y;
+
+    return direction;
+};
+
+var multiply = function(v, n) {
+    var result = {};
+    result.x = v.x * n;
+    result.y = v.y * n;
+
+    return result;
 };
 
 var moveHerbivore = function(herbivore) {
-
+    var direction = randomDirection();
+    var move = multiply(direction, meterSize);
+    herbivore.x = herbivore.x + move.x;
+    herbivore.y = herbivore.y + move.y;
 };
 
 var moveHerbivores = function() {
@@ -138,3 +165,5 @@ for (turnsCount = 0; turnsCount < turns; turnsCount++) {
 
     drawGrid();
 }
+
+console.log(sqrt(0.2));
